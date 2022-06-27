@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800;900&display=swap');
+        body { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        body * {
+            font-family: 'Nunito';
+            color: #183153;
+        }
+        .color{ color: #363636; transition: 0.5s; cursor: pointer;} .color:hover { color: red }
+        .twoColor {fill: red; transition: 0.5s;} .twoColor:hover { fill: yellow !important; stroke: purple; }
+        .md { margin-left: 40px;}
+    </style>
+    <title></title>
+    <script type="module" src="index.js" defer></script>
+</head>
+<body>
+    <div style="
+        display: flex;
+    ">
+        <h1>Bem-vindo ao TIL (Totvs Icon Library)</h1>
+    </div>
+    <div>
+        <i-sol icon="user_astronaut" size="72" color="#0897E9"></i-sol>
+        <i-sol icon="user_astronaut" size="72" color="#FEAC0E"></i-sol>
+        <i-sol icon="user_astronaut" size="72" color="#0ADBE3"></i-sol>
+        <i-sol icon="user_astronaut" size="72" color="#6B48FF"></i-sol>
+        <i-sol class="color" icon="user_astronaut" size="72"></i-sol>
+    </div>
+    <div>
+        <i-out icon="user_astronaut" size="72" color="#0897E9"></i-out>
+        <i-out icon="user_astronaut" size="72" color="#FEAC0E"></i-out>
+        <i-out icon="user_astronaut" size="72" color="#0ADBE3"></i-out>
+        <i-out icon="user_astronaut" size="72" color="#6B48FF"></i-out>
+        <i-out icon="user_astronaut" size="72" color="#363636"></i-out>
+    </div>
+    <div>
+        <i-two icon="user_astronaut" size="72" inColor="#eee" outColor="#ccc"></i-two>
+        <i-two icon="user_astronaut" size="72" inColor="#0ADBE3" outColor="#6B48FF"></i-two>
+        <i-two class="twoColor" icon="user_astronaut" size="72" color="#0ADBE3"></i-two>
+        <i-two icon="user_astronaut" size="72" color="#6B48FF"></i-two>
+        <i-two icon="user_astronaut" size="72" color="#363636"></i-two>
+    </div>
+</body>
+</html>

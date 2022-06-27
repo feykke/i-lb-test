@@ -1,0 +1,1 @@
+# Teste para uma futura lib de icones
