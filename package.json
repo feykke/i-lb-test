@@ -15,7 +15,7 @@
     "export": "figma-export use-config .figmaexportrc.cjs",
     "create": "node createFiles.js",
     "create:icons": "run-s clear export create",
-    "dev": "webpack serve --hot --mode development",
+    "serve": "webpack serve --hot --mode development",
     "build": "webpack --mode production"
   },
   "keywords": [],
