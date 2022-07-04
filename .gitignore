@@ -1,7 +1,8 @@
 # build output
 
 #build
-/assets
+src/assets
+/dist
 
 # dependencies
 /node_modules
