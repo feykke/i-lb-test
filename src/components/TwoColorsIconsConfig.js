@@ -1,24 +1,24 @@
-import { outlineIcons } from './icons/outline.js'
+import { twoColorsIcons } from '../icons/twoColors.js'
 
-export default class OutlineIconsConfig extends HTMLElement {
+export default class TwoColorsIconsConfig extends HTMLElement {
     constructor() {
         super()
         this.build()
     }
 
-    build() {
-        const shadow = this.attachShadow({ mode: 'open' })
+    build () {
+        const shadow = this.attachShadow({mode: 'open'})
         this.createRootElement(shadow)
+
     }
 
     createRootElement(shadow) {
         const iconName = this.getAttribute('icon')
         if(iconName) {
-            shadow.innerHTML = outlineIcons[iconName]
+            shadow.innerHTML = twoColorsIcons[iconName]
         }
-        this.updateIconStyles(shadow)
 
-        return shadow
+        this.updateIconStyles(shadow)
     }
 
     updateSize(svg) {
@@ -36,9 +36,10 @@ export default class OutlineIconsConfig extends HTMLElement {
     }
 
     updateColorAndBgColor(rootElement) {
-        const color = this.getAttribute('color')
+        const inColor = this.getAttribute('inColor')
+        const outColor = this.getAttribute('outColor')
         const bgColor = this.getAttribute('bgColor')
-        rootElement.children[0].setAttribute('style', `background-color: ${bgColor}; color: ${color}`)
+        rootElement.children[0].setAttribute('style', `background-color: ${bgColor}; fill: ${inColor}; stroke: ${outColor}`)
     }
 
     updateIconStyles(rootElement) {

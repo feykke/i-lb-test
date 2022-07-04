@@ -1,24 +1,24 @@
-import { twoColorsIcons } from './icons/twoColors.js'
+import { solidIcons } from '../icons/solid.js'
 
-export default class TwoColorsIconsConfig extends HTMLElement {
-    constructor() {
+export default class SolidIconsConfig extends HTMLElement {
+    constructor () {
         super()
         this.build()
     }
 
-    build () {
-        const shadow = this.attachShadow({mode: 'open'})
+    build() {
+        const shadow = this.attachShadow({ mode: 'open' })
         this.createRootElement(shadow)
-
     }
 
     createRootElement(shadow) {
         const iconName = this.getAttribute('icon')
-        if(iconName) {
-            shadow.innerHTML = twoColorsIcons[iconName]
+        if (iconName) {
+            shadow.innerHTML = solidIcons[iconName]
         }
-
         this.updateIconStyles(shadow)
+
+        return shadow
     }
 
     updateSize(svg) {
@@ -27,19 +27,18 @@ export default class TwoColorsIconsConfig extends HTMLElement {
         svg.setAttribute('width', size? size : '24px')
     }
 
+    updateColorAndBgColor(rootElement) {
+        const color = this.getAttribute('color')
+        const bgColor = this.getAttribute('bgColor')
+        rootElement.children[0].setAttribute('style', `background-color: ${bgColor}; color: ${color}`)
+    }
+
     updateClass(rootElement) {
         const classesNames = this.getAttribute('class')
         const classesList = classesNames.split(' ')
         classesList.forEach(className => {
             rootElement.children[0].classList.add(className)
         })
-    }
-
-    updateColorAndBgColor(rootElement) {
-        const inColor = this.getAttribute('inColor')
-        const outColor = this.getAttribute('outColor')
-        const bgColor = this.getAttribute('bgColor')
-        rootElement.children[0].setAttribute('style', `background-color: ${bgColor}; fill: ${inColor}; stroke: ${outColor}`)
     }
 
     updateIconStyles(rootElement) {
