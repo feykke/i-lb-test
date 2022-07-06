@@ -1,7 +1,7 @@
-import { solidIcons } from '../icons/solid.js'
+import { outlineIcons } from '../../icons/outline.js'
 
-export default class SolidIconsConfig extends HTMLElement {
-    constructor () {
+export default class OutlineIconsConfig extends HTMLElement {
+    constructor() {
         super()
         this.build()
     }
@@ -13,8 +13,8 @@ export default class SolidIconsConfig extends HTMLElement {
 
     createRootElement(shadow) {
         const iconName = this.getAttribute('icon')
-        if (iconName) {
-            shadow.innerHTML = solidIcons[iconName]
+        if(iconName) {
+            shadow.innerHTML = outlineIcons[iconName]
         }
         this.updateIconStyles(shadow)
 
@@ -27,18 +27,18 @@ export default class SolidIconsConfig extends HTMLElement {
         svg.setAttribute('width', size? size : '24px')
     }
 
-    updateColorAndBgColor(rootElement) {
-        const color = this.getAttribute('color')
-        const bgColor = this.getAttribute('bgColor')
-        rootElement.children[0].setAttribute('style', `background-color: ${bgColor}; color: ${color}`)
-    }
-
     updateClass(rootElement) {
         const classesNames = this.getAttribute('class')
         const classesList = classesNames.split(' ')
         classesList.forEach(className => {
             rootElement.children[0].classList.add(className)
         })
+    }
+
+    updateColorAndBgColor(rootElement) {
+        const color = this.getAttribute('color')
+        const bgColor = this.getAttribute('bgColor')
+        rootElement.children[0].setAttribute('style', `background-color: ${bgColor}; color: ${color}`)
     }
 
     updateIconStyles(rootElement) {
