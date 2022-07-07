@@ -1,51 +1,76 @@
 import { twoColorsIcons } from '../../icons/twoColors.js'
 
 export default class TwoColorsIconsConfig extends HTMLElement {
+    icon = ''
+    fillColor = ''
+    strokeColor = ''
+    size = ''
+    classes = []
+
+    static get observedAttributes() {
+        return ['icon', 'fill', 'stroke', 'size', 'class']
+    }
+
     constructor() {
         super()
-        this.build()
+        this.attachShadow({ mode: 'open' })
+        this.addClasses(this.icon)
+        this.render()
     }
 
-    build () {
-        const shadow = this.attachShadow({mode: 'open'})
-        this.createRootElement(shadow)
-
-    }
-
-    createRootElement(shadow) {
-        const iconName = this.getAttribute('icon')
-        if(iconName) {
-            shadow.innerHTML = twoColorsIcons[iconName]
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch(name) {
+            case 'icon':
+                this.icon = twoColorsIcons[newValue] || ''
+                break
+            case 'size':
+                this.size = newValue || ''
+                break
+            case 'fill':
+                this.fillColor = newValue || ''
+                break
+            case 'stroke':
+                this.strokeColor = newValue || ''
+                break
+            case 'class':
+                this.classes = newValue.split(' ')
+                break
         }
 
-        this.updateIconStyles(shadow)
+        this.render()
     }
 
-    updateSize(svg) {
-        const size = this.getAttribute('size')
-        svg.setAttribute('height', size? size : '24px')
-        svg.setAttribute('width', size? size : '24px')
+    get style() {
+        return `
+            <style>
+                :host {
+                    display: inline-block;
+                    --icon-fill: ${this.fillColor};
+                    --icon-stroke: ${this.strokeColor};
+                    --icon-size: ${this.size}
+                }
+
+                svg {
+                    fill: var(--icon-fill, #ccc);
+                    stroke: var(--icon-stroke, #363636);
+                    width: var(--icon-size, 32px);
+                    height: var(--icon-size, 32px)
+                }
+            </style>
+        `
     }
 
-    updateClass(rootElement) {
-        const classesNames = this.getAttribute('class')
-        const classesList = classesNames.split(' ')
-        classesList.forEach(className => {
-            rootElement.children[0].classList.add(className)
+    get template() {
+        return `${this.icon}`
+    }
+
+    addClasses(element) {
+        this.classes.forEach(className => {
+            element.classList.add(className)
         })
     }
 
-    updateColorAndBgColor(rootElement) {
-        const inColor = this.getAttribute('inColor')
-        const outColor = this.getAttribute('outColor')
-        const bgColor = this.getAttribute('bgColor')
-        rootElement.children[0].setAttribute('style', `background-color: ${bgColor}; fill: ${inColor}; stroke: ${outColor}`)
-    }
-
-    updateIconStyles(rootElement) {
-        const svg = rootElement.querySelector('svg')
-        this.updateSize(svg)
-        this.updateColorAndBgColor(rootElement) 
-        this.updateClass(rootElement) 
+    render() {
+        this.shadowRoot.innerHTML = `${this.style}${this.template}`
     }
 }

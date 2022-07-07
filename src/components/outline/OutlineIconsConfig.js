@@ -1,50 +1,69 @@
 import { outlineIcons } from '../../icons/outline.js'
-
 export default class OutlineIconsConfig extends HTMLElement {
+    icon = ''
+    color = ''
+    size = ''
+    classes = []
+
+    static get observedAttributes() {
+        return ['icon', 'color', 'size', 'class']
+    }
+
     constructor() {
         super()
-        this.build()
+        this.attachShadow({ mode: "open" })
+        this.addClasses(this.icon)
+        this.render()
     }
 
-    build() {
-        const shadow = this.attachShadow({ mode: 'open' })
-        this.createRootElement(shadow)
-    }
-
-    createRootElement(shadow) {
-        const iconName = this.getAttribute('icon')
-        if(iconName) {
-            shadow.innerHTML = outlineIcons[iconName]
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch(name) {
+            case 'icon':
+                this.icon = outlineIcons[newValue] || ''
+                break
+            case 'color':
+                this.color = newValue || ''
+                break
+            case 'size':
+                this.size = newValue || ''
+                break
+            case 'class':
+                this.classes = newValue.split(' ') || []
+                break
         }
-        this.updateIconStyles(shadow)
 
-        return shadow
+        this.render()
     }
 
-    updateSize(svg) {
-        const size = this.getAttribute('size')
-        svg.setAttribute('height', size? size : '24px')
-        svg.setAttribute('width', size? size : '24px')
+    get style() {
+        return `
+            <style>
+                :host {
+                    display: inline-block;
+                    --icon-color: ${this.color};
+                    --icon-size: ${this.size}
+                }
+
+                svg {
+                    stroke: var(--icon-color, #363636);
+                    width: var(--icon-size, 32px);
+                    height: var(--icon-size, 32px)
+                }
+            </style>
+        `
     }
 
-    updateClass(rootElement) {
-        const classesNames = this.getAttribute('class')
-        const classesList = classesNames.split(' ')
-        classesList.forEach(className => {
-            rootElement.children[0].classList.add(className)
+    get template() {
+        return `${this.icon}`
+    }
+
+    addClasses(element) {
+        this.classes.forEach(className => {
+            element.classList.add(className)
         })
     }
 
-    updateColorAndBgColor(rootElement) {
-        const color = this.getAttribute('color')
-        const bgColor = this.getAttribute('bgColor')
-        rootElement.children[0].setAttribute('style', `background-color: ${bgColor}; color: ${color}`)
-    }
-
-    updateIconStyles(rootElement) {
-        const svg = rootElement.querySelector('svg')
-        this.updateSize(svg)
-        this.updateColorAndBgColor(rootElement) 
-        this.updateClass(rootElement) 
+    render() {
+        this.shadowRoot.innerHTML=`${this.style}${this.template}`
     }
 }
