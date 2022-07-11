@@ -1,67 +1,64 @@
 import { twoColorsIcons } from '../../icons/twoColors.js'
 
 export default class TwoColorsIconsConfig extends HTMLElement {
-    icon = ''
-    fillColor = ''
-    strokeColor = ''
-    size = ''
     classes = []
 
     static get observedAttributes() {
         return ['icon', 'fill', 'stroke', 'size', 'class']
-    }
-
-    constructor() {
-        super()
-        this.attachShadow({ mode: 'open' })
-        this.addClasses(this.icon)
-        this.render()
-    }
-
-    attributeChangedCallback(name, oldValue, newValue) {
-        switch(name) {
-            case 'icon':
-                this.icon = twoColorsIcons[newValue] || ''
-                break
-            case 'size':
-                this.size = newValue || ''
-                break
-            case 'fill':
-                this.fillColor = newValue || ''
-                break
-            case 'stroke':
-                this.strokeColor = newValue || ''
-                break
-            case 'class':
-                this.classes = newValue.split(' ')
-                break
-        }
-
-        this.render()
+    }   
+    
+    get template() {
+        return `
+        ${twoColorsIcons[this.getAttribute('icon')]}
+        `
     }
 
     get style() {
         return `
-            <style>
-                :host {
-                    display: inline-block;
-                    --icon-fill: ${this.fillColor};
-                    --icon-stroke: ${this.strokeColor};
-                    --icon-size: ${this.size}
-                }
+    <style>
+        :host {
+            display: inline-block;
+            --icon-stroke: ${this.getAttribute('stroke') || '#363636'};
+            --icon-fill: ${this.getAttribute('fill') || '#CCC'};
+            --icon-size: ${this.getAttribute('size') || '32px'};
+        }
 
-                svg {
-                    fill: var(--icon-fill, #ccc);
-                    stroke: var(--icon-stroke, #363636);
-                    width: var(--icon-size, 32px);
-                    height: var(--icon-size, 32px)
-                }
-            </style>
+        svg {
+            stroke: var(--icon-stroke);
+            fill: var(--icon-fill);
+            width: var(--icon-size);
+            height: var(--icon-size)
+        }
+    </style>
         `
-    }
+    }   
 
-    get template() {
-        return `${this.icon}`
+    constructor() {
+        super()
+        this.attachShadow({ mode: 'open' })
+        this.addClasses(this.template)
+        this.render()
+    }
+    
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case 'icon':
+                newValue !== null? this.setAttribute('icon', newValue): this.removeAttribute('icon')
+                break
+            case 'size': 
+                newValue !== null? this.setAttribute('size', newValue): this.removeAttribute('size')
+                break
+            case 'stroke':
+                newValue !== null? this.setAttribute('stroke', newValue): this.removeAttribute('stroke')
+                break
+            case 'fill':
+                newValue !== null? this.setAttribute('fill', newValue): this.removeAttribute('fill')
+                break
+            case 'class': 
+                this.classes = newValue.split(' ') || []
+                break
+        }
+        this.render()
     }
 
     addClasses(element) {
