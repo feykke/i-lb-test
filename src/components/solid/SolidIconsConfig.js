@@ -1,61 +1,59 @@
 import { solidIcons } from '../../icons/solid.js'
+
 export default class SolidIconsConfig extends HTMLElement {
-    icon = ''
-    size = ''
-    color = ''
     classes = []
 
     static get observedAttributes() {
         return ['icon', 'size', 'color', 'class']
     }   
     
+    get template() {
+        return `
+        ${solidIcons[this.getAttribute('icon')]}
+        `
+    }
+
+    get style() {
+        return `
+    <style>
+        :host {
+            display: inline-block;
+            --icon-color: ${this.getAttribute('color') || '#363636'};
+            --icon-size: ${this.getAttribute('size') || '32px'};
+        }
+
+        svg {
+            fill: var(--icon-color);
+            width: var(--icon-size);
+            height: var(--icon-size)
+        }
+    </style>
+        `
+    }   
+
     constructor() {
         super()
         this.attachShadow({ mode: 'open' })
-        this.addClasses(this.icon)
+        this.addClasses(this.template)
         this.render()
     }
-
+    
     attributeChangedCallback(name, oldValue, newValue) {
         switch (name) {
             case 'icon':
-                this.icon = solidIcons[newValue] || ''
+                newValue !== null? this.setAttribute('icon', newValue): this.removeAttribute('icon')
                 break
             case 'size': 
-                this.size = newValue || ''
+                newValue !== null? this.setAttribute('size', newValue): this.removeAttribute('size')
                 break
             case 'color':
-                this.color = newValue || ''
+                newValue !== null? this.setAttribute('color', newValue): this.removeAttribute('color')
                 break
             case 'class': 
                 this.classes = newValue.split(' ') || []
                 break
         }
         this.render()
-    }
-
-    get style() {
-        return `
-            <style>
-                :host {
-                    display: inline-block;
-                    --icon-color: ${this.color};
-                    --icon-size: ${this.size}
-                }
-
-                svg {
-                    fill: var(--icon-color, #363636);
-                    width: var(--icon-size, 32px);
-                    height: var(--icon-size, 32px)
-                }
-            </style>
-        `
-    }   
-
-    get template() {
-        return `
-            ${this.icon}
-        `
     }
 
     addClasses(element) {
