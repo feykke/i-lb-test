@@ -1,60 +1,59 @@
 import { outlineIcons } from '../../icons/outline.js'
+
 export default class OutlineIconsConfig extends HTMLElement {
-    icon = ''
-    color = ''
-    size = ''
     classes = []
 
     static get observedAttributes() {
-        return ['icon', 'color', 'size', 'class']
-    }
-
-    constructor() {
-        super()
-        this.attachShadow({ mode: "open" })
-        this.addClasses(this.icon)
-        this.render()
-    }
-
-    attributeChangedCallback(name, oldValue, newValue) {
-        switch(name) {
-            case 'icon':
-                this.icon = outlineIcons[newValue] || ''
-                break
-            case 'color':
-                this.color = newValue || ''
-                break
-            case 'size':
-                this.size = newValue || ''
-                break
-            case 'class':
-                this.classes = newValue.split(' ') || []
-                break
-        }
-
-        this.render()
+        return ['icon', 'size', 'color', 'class']
+    }   
+    
+    get template() {
+        return `
+        ${outlineIcons[this.getAttribute('icon')]}
+        `
     }
 
     get style() {
         return `
-            <style>
-                :host {
-                    display: inline-block;
-                    --icon-color: ${this.color};
-                    --icon-size: ${this.size}
-                }
+    <style>
+        :host {
+            display: inline-block;
+            --icon-color: ${this.getAttribute('color') || '#363636'};
+            --icon-size: ${this.getAttribute('size') || '32px'};
+        }
 
-                svg {
-                    stroke: var(--icon-color, #363636);
-                    width: var(--icon-size, 32px);
-                    height: var(--icon-size, 32px)
-                }
-            </style>
+        svg {
+            stroke: var(--icon-color);
+            width: var(--icon-size);
+            height: var(--icon-size)
+        }
+    </style>
         `
-    }
+    }   
 
-    get template() {
-        return `${this.icon}`
+    constructor() {
+        super()
+        this.attachShadow({ mode: 'open' })
+        this.addClasses(this.template)
+        this.render()
+    }
+    
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case 'icon':
+                newValue !== null? this.setAttribute('icon', newValue): this.removeAttribute('icon')
+                break
+            case 'size': 
+                newValue !== null? this.setAttribute('size', newValue): this.removeAttribute('size')
+                break
+            case 'color':
+                newValue !== null? this.setAttribute('color', newValue): this.removeAttribute('color')
+                break
+            case 'class': 
+                this.classes = newValue.split(' ') || []
+                break
+        }
+        this.render()
     }
 
     addClasses(element) {
@@ -64,6 +63,6 @@ export default class OutlineIconsConfig extends HTMLElement {
     }
 
     render() {
-        this.shadowRoot.innerHTML=`${this.style}${this.template}`
+        this.shadowRoot.innerHTML = `${this.style}${this.template}`
     }
 }
