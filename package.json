@@ -1,13 +1,12 @@
 {
   "name": "i-lb-test",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "",
   "main": "./dist/bundle.js",
   "exports": "./dist/bundle.js",
   "files": [
     "dist"
   ],
-  "type": "module",
   "homepage": "https://github.com/feykke/i-lb-test#readme",
   "repository": {
     "type": "git",

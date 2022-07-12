@@ -1,5 +1,5 @@
-import { readdir, readFile, writeFile } from 'fs/promises'
-import path from 'path'
+const { readdir, readFile, writeFile } = require('fs/promises')
+const path = require('path')
 
 const solidPath = path.resolve('assets/solid')
 const outlinePath = path.resolve('assets/outline')
