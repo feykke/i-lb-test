@@ -5,11 +5,15 @@ export default class OutlineIconsConfig extends HTMLElement {
 
     static get observedAttributes() {
         return ['icon', 'size', 'color', 'class']
-    }   
+    }
+    
+    get iconName() {
+        return this.getAttribute('icon') || (this.textContent || '').trim()
+    }
     
     get template() {
         return `
-        ${outlineIcons[this.getAttribute('icon')]}
+        ${outlineIcons[this.iconName]}
         `
     }
 

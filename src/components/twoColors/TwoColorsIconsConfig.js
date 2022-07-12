@@ -5,11 +5,15 @@ export default class TwoColorsIconsConfig extends HTMLElement {
 
     static get observedAttributes() {
         return ['icon', 'fill', 'stroke', 'size', 'class']
-    }   
+    }
+    
+    get iconName() {
+        return this.getAttribute('icon') || (this.textContent || '').trim()
+    }
     
     get template() {
         return `
-        ${twoColorsIcons[this.getAttribute('icon')]}
+        ${twoColorsIcons[this.iconName]}
         `
     }
 
