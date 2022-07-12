@@ -1,9 +1,9 @@
 {
   "name": "i-lb-test",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "",
-  "main": "./dist/bundle.js",
-  "exports": "./dist/bundle.js",
+  "main": "./src/index.js",
+  "exports": "./dist/dist.js",
   "files": [
     "dist"
   ],

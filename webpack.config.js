@@ -8,7 +8,7 @@ module.exports = {
     // Define onde será criado o arquivo bundle
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js'
+        filename: 'dist.js'
     },
 
     // Define qual será o tratamento para cada tipo de arquivo
