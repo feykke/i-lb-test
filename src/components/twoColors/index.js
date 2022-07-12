@@ -1,3 +1,3 @@
 import TwoColorsIconsConfig from "./TwoColorsIconsConfig.js";
 
-window.customElements.define('i-two', TwoColorsIconsConfig)
+export const TwoColorIcons = window.customElements.define('i-two', TwoColorsIconsConfig)

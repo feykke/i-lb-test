@@ -1,3 +1,5 @@
-import './components/outline/index.js'
-import './components/solid/index.js'
-import './components/twoColors/index.js'
+import { OutlineIcons } from'./components/outline/index.js'
+import { SolidIcons } from './components/solid/index.js'
+import { TwoColorIcons } from './components/twoColors/index.js'
+
+export { SolidIcons, OutlineIcons, TwoColorIcons }

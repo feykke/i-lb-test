@@ -1,3 +1,3 @@
 import OutlineIconsConfig from './OutlineIconsConfig.js'
 
-window.customElements.define('i-out', OutlineIconsConfig)
+export const OutlineIcons = window.customElements.define('i-out', OutlineIconsConfig)

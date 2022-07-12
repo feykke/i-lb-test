@@ -1,3 +1,3 @@
 import SolidIconsConfig from "./SolidIconsConfig.js";
 
-window.customElements.define('i-sol', SolidIconsConfig)
+export const SolidIcons = window.customElements.define('i-sol', SolidIconsConfig)
