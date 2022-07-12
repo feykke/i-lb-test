@@ -44,16 +44,16 @@ export default class OutlineIconsConfig extends HTMLElement {
     
     attributeChangedCallback(name, oldValue, newValue) {
         switch (name) {
-            case 'icon':
+            case 'icon' && (newValue !== oldValue):
                 newValue !== null? this.setAttribute('icon', newValue): this.removeAttribute('icon')
                 break
-            case 'size': 
+            case 'size' && (newValue !== oldValue): 
                 newValue !== null? this.setAttribute('size', newValue): this.removeAttribute('size')
                 break
-            case 'color':
+            case 'color' && (newValue !== oldValue):
                 newValue !== null? this.setAttribute('color', newValue): this.removeAttribute('color')
                 break
-            case 'class': 
+            case 'class' && (newValue !== oldValue): 
                 this.classes = newValue.split(' ') || []
                 break
         }

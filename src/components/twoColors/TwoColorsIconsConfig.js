@@ -46,19 +46,19 @@ export default class TwoColorsIconsConfig extends HTMLElement {
     
     attributeChangedCallback(name, oldValue, newValue) {
         switch (name) {
-            case 'icon':
+            case 'icon' && (newValue !== oldValue):
                 newValue !== null? this.setAttribute('icon', newValue): this.removeAttribute('icon')
                 break
-            case 'size': 
+            case 'size' && (newValue !== oldValue): 
                 newValue !== null? this.setAttribute('size', newValue): this.removeAttribute('size')
                 break
-            case 'stroke':
+            case 'stroke' && (newValue !== oldValue):
                 newValue !== null? this.setAttribute('stroke', newValue): this.removeAttribute('stroke')
                 break
-            case 'fill':
+            case 'fill' && (newValue !== oldValue):
                 newValue !== null? this.setAttribute('fill', newValue): this.removeAttribute('fill')
                 break
-            case 'class': 
+            case 'class' && (newValue !== oldValue): 
                 this.classes = newValue.split(' ') || []
                 break
         }

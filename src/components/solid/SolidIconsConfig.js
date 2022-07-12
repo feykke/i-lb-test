@@ -44,16 +44,18 @@ export default class SolidIconsConfig extends HTMLElement {
     
     attributeChangedCallback(name, oldValue, newValue) {
         switch (name) {
-            case 'icon':
-                newValue !== null? this.setAttribute('icon', newValue): this.removeAttribute('icon')
+            case 'icon' && (newValue !== oldValue):
+                newValue ? this.setAttribute('icon', newValue): this.removeAttribute('icon')
                 break
-            case 'size': 
-                newValue !== null? this.setAttribute('size', newValue): this.removeAttribute('size')
+            case 'size' && (newValue !== oldValue):
+                if(newValue !== oldValue) {
+                    newValue ? this.setAttribute('size', newValue): this.removeAttribute('size')
+                } 
                 break
-            case 'color':
-                newValue !== null? this.setAttribute('color', newValue): this.removeAttribute('color')
+            case 'color' && (newValue !== oldValue):
+                newValue ? this.setAttribute('color', newValue): this.removeAttribute('color')
                 break
-            case 'class': 
+            case 'class' && (newValue !== oldValue): 
                 this.classes = newValue.split(' ') || []
                 break
         }
