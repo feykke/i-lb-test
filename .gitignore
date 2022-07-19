@@ -1,5 +1,7 @@
 # build output
 
+index.html
+
 #build
 src/assets
 /dist
