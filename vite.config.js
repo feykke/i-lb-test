@@ -7,6 +7,8 @@ export default defineConfig({
             entry: resolve(__dirname, './src/index.js'),
             name: 'ILbTest',
             fileName: 'dist'
-        }
+        },
+        minify: 'esbuild',
+        sourcemap: true
     }
 })
